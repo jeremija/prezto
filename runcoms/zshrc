@@ -11,3 +11,71 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+
+__fsel() {
+  # set -o nonomatch
+  # command git rev-parse --show-cdup > /dev/null || exit
+  command ag '^' -l $(git rev-parse --show-cdup) | fzf
+}
+
+__gdsel() {
+  set -e
+  set -o nonomatch
+  command git rev-parse --show-cdup > /dev/null || exit
+  command git diff --name-only | fzf
+}
+
+file-widget() {
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER $(__fsel)"
+  else
+      LBUFFER="vim $(__fsel)"
+  fi
+
+  zle redisplay
+}
+
+changed-file-widget() {
+  LBUFFER="${LBUFFER}$(__gdsel)"
+  zle redisplay
+}
+
+zle -N file-widget
+zle -N changed-file-widget
+bindkey '^P' file-widget
+bindkey '^O' changed-file-widget
+
+# ALT-C - cd into the selected directory
+fzf-cd-widget() {
+  cd "${$(command find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+    -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m):-.}"
+  zle reset-prompt
+}
+zle     -N    fzf-cd-widget
+bindkey '\ec' fzf-cd-widget
+
+# CTRL-R - Paste the selected command from history into the command line
+fzf-history-widget() {
+  local selected
+  if selected=$(fc -l 1 | fzf +s --tac +m -n2..,.. --toggle-sort=ctrl-r -q "$LBUFFER"); then
+    num=$(echo "$selected" | head -1 | awk '{print $1}' | sed 's/[^0-9]//g')
+    LBUFFER=!$num
+    zle expand-history
+  fi
+  zle redisplay
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
+
+source $HOME/.local/bin/bashmarks.sh
+unsetopt cdablevars
+setopt HIST_IGNORE_ALL_DUPS
+
+alias ssh="TERM=xterm ssh"
+alias tig="tig --all"
+alias gst="git status"
+alias ga="git add"
+alias gd="git diff"
+alias gcmsg="git commit -m"
+alias gc!="git commit --amend"
