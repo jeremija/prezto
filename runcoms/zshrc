@@ -68,7 +68,6 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-source $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
 setopt HIST_IGNORE_ALL_DUPS
 
@@ -79,3 +78,6 @@ alias ga="git add"
 alias gd="git diff"
 alias gcmsg="git commit -m"
 alias gc!="git commit --amend"
+unalias rm
+
+alias c='jump'
