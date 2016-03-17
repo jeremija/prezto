@@ -71,6 +71,7 @@ function prompt_steeef_setup {
   local action_format="${_prompt_steeef_colors[5]}%a%f"
   local unstaged_format="${_prompt_steeef_colors[2]} ●%f"
   local staged_format="${_prompt_steeef_colors[5]} ●%f"
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{7}...%f%b'
 
   # Set vcs_info parameters.
   zstyle ':vcs_info:*' enable bzr git hg svn
