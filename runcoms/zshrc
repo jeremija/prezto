@@ -81,3 +81,8 @@ alias gc!="git commit --amend"
 unalias rm
 
 alias c='jump'
+
+if [[ "$OSTYPE" == linux* ]]; then
+  # dir colors
+  eval $(dircolors ~/.dircolors)
+fi
