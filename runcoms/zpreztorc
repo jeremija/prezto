@@ -34,7 +34,8 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'prompt' \
   'git' \
-  'zshmarks'
+  'zshmarks' \
+  'syntax-highlighting'
 
 #
 # Editor
@@ -119,18 +120,18 @@ zstyle ':prezto:module:prompt' theme 'steeef'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-# zstyle ':prezto:module:syntax-highlighting' highlighters \
-#   'main' \
-#   'brackets' \
-#   'pattern' \
-#   'cursor' \
-#   'root'
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'cursor' \
+  'root'
 #
 # Set syntax highlighting styles.
-# zstyle ':prezto:module:syntax-highlighting' styles \
-#   'builtin' 'bg=blue' \
-#   'command' 'bg=blue' \
-#   'function' 'bg=blue'
+zstyle ':prezto:module:syntax-highlighting' styles \
+  'builtin' 'fg=blue' \
+  'command' 'fg=blue' \
+  'function' 'fg=blue'
 
 #
 # Terminal
