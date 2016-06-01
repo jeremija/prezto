@@ -26,6 +26,10 @@ __gdsel() {
   command git diff --name-only | fzf
 }
 
+__cur_dir_sel() {
+  command ag '^' -l | fzf
+}
+
 file-widget() {
   if [[ "$LBUFFER" != "" ]]; then
       LBUFFER="$LBUFFER $(__fsel)"
@@ -41,10 +45,17 @@ changed-file-widget() {
   zle redisplay
 }
 
+current-dir-widget() {
+  LBUFFER="${LBUFFER}$(__cur_dir_sel)"
+  zle redisplay
+}
+
 zle -N file-widget
 zle -N changed-file-widget
+zle -N current-dir-widget
 bindkey '^P' file-widget
-bindkey '^O' changed-file-widget
+# bindkey '^O' changed-file-widget
+bindkey '^O' current-dir-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
@@ -86,3 +97,18 @@ if [[ "$OSTYPE" == linux* ]]; then
   # dir colors
   eval $(dircolors ~/.dircolors)
 fi
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias cal='gcal --starting-day=1'
+
+unsetopt CORRECT
+
+if [[ -n $VIRTUAL_ENV ]]; then
+  source "$VIRTUAL_ENV/bin/activate"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
