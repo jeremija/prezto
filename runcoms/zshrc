@@ -46,7 +46,11 @@ changed-file-widget() {
 }
 
 current-dir-widget() {
-  LBUFFER="${LBUFFER}$(__cur_dir_sel)"
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER $(__cur_dir_sel)"
+  else
+      LBUFFER="vim $(__cur_dir_sel)"
+  fi
   zle redisplay
 }
 
