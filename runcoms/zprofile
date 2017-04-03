@@ -45,6 +45,7 @@ typeset -gU cdpath fpath mailpath path
 path=(
   ${HOME}/bin
   ${HOME}/opt/node_modules/.bin
+  ${HOME}/src/go/bin
   ${HOME}/.cargo/bin
   /usr/local/{bin,sbin}
   $path
