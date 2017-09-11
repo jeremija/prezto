@@ -26,7 +26,3 @@ if [[ "$OSTYPE" == linux* ]]; then
   # make monday first day of the week
   export LC_TIME="en_GB.UTF-8"
 fi
-
-if [[ "$GOPATH" == "" ]]; then
-  export GOPATH="$HOME/src/go"
-fi
