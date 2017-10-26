@@ -93,6 +93,9 @@ alias ga="git add"
 alias gd="git diff"
 alias gcmsg="git commit -m"
 alias gc!="git commit --amend"
+alias tmux-id="tmux display-message -p '#S:#I'"
+alias vs="vim --servername $(tmux-id)"
+alias es="vs --remote-silent"
 unalias rm
 
 alias c='jump'
