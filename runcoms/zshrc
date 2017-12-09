@@ -16,7 +16,7 @@ fi
 __fsel() {
   # set -o nonomatch
   # command git rev-parse --show-cdup > /dev/null || exit
-  command rg --files $(git rev-parse --show-cdup) | fzf
+  command rg --hidden --files $(git rev-parse --show-cdup) | fzf
 }
 
 __gdsel() {
@@ -27,7 +27,7 @@ __gdsel() {
 }
 
 __cur_dir_sel() {
-  command rg --files | fzf
+  command rg --hidden --files | fzf
 }
 
 file-widget() {
