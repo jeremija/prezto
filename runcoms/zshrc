@@ -109,6 +109,7 @@ alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 alias cal='gcal --starting-day=1'
 alias rg='rg --smart-case'
+alias npx='npx --no-install'
 
 unsetopt CORRECT
 
