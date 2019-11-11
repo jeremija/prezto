@@ -47,6 +47,7 @@ path=(
   ${HOME}/opt/node_modules/.bin
   ${HOME}/src/go/bin
   ${HOME}/.cargo/bin
+  ${HOME}/.nimble/bin
   /usr/local/{bin,sbin}
   $path
 )
