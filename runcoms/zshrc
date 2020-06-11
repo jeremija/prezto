@@ -63,9 +63,11 @@ bindkey '^O' current-dir-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
-  cd "${$(command find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-    -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m):-.}"
-  zle reset-prompt
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER "
+  fi
+  LBUFFER="$LBUFFER${$(command fd -t d | sed 's/^/.\//' | sed 's/$/\//' | fzf +m):-.}"
+  zle redisplay
 }
 zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
@@ -93,6 +95,7 @@ alias ga="git add"
 alias gd="git diff"
 alias gcmsg="git commit -m"
 alias gc!="git commit --amend"
+alias gc@="gc! --no-edit"
 alias tmux-id="tmux display-message -p '#S:#I'"
 unalias rm
 
