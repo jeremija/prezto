@@ -30,6 +30,10 @@ __cur_dir_sel() {
   command rg --hidden --files | fzf
 }
 
+__git_branch_sel() {
+  command git branch --format='%(refname:short)' -a | fzf
+}
+
 file-widget() {
   if [[ "$LBUFFER" != "" ]]; then
       LBUFFER="$LBUFFER $(__fsel)"
@@ -37,6 +41,11 @@ file-widget() {
       LBUFFER="vim $(__fsel)"
   fi
 
+  zle redisplay
+}
+
+git-branch-widget() {
+  LBUFFER="$LBUFFER$(__git_branch_sel)"
   zle redisplay
 }
 
@@ -57,15 +66,14 @@ current-dir-widget() {
 zle -N file-widget
 zle -N changed-file-widget
 zle -N current-dir-widget
+zle -N git-branch-widget
 bindkey '^P' file-widget
 # bindkey '^O' changed-file-widget
 bindkey '^O' current-dir-widget
+bindkey '^G' git-branch-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
-  if [[ "$LBUFFER" != "" ]]; then
-      LBUFFER="$LBUFFER "
-  fi
   LBUFFER="$LBUFFER${$(command fd -t d | sed 's/^/.\//' | sed 's/$/\//' | fzf +m):-.}"
   zle redisplay
 }
@@ -89,7 +97,7 @@ unsetopt cdablevars
 setopt HIST_IGNORE_ALL_DUPS
 
 alias ssh="TERM=xterm ssh"
-alias tig="tig --all"
+# alias tig="tig --all"
 alias gst="git status"
 alias ga="git add"
 alias gd="git diff"
