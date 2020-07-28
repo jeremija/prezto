@@ -136,3 +136,7 @@ export NVM_DIR="$HOME/.nvm"
 if which direnv >/dev/null 2>/dev/null; then
   eval "$(direnv hook zsh)"
 fi
+
+if [[ -s "${ZDOTDIR:-$HOME}/.zlocal.zsh" ]]; then
+  source ~/.zlocal.zsh
+fi
