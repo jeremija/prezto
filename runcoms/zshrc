@@ -31,12 +31,12 @@ __cur_dir_sel() {
 }
 
 __git_branch_sel() {
-  command git branch --format='%(refname:short)' -a | fzf
+  command git branch --format='%(refname:short)' -a | sed 's/^origin\///g' | sort | uniq | fzf
 }
 
 file-widget() {
   if [[ "$LBUFFER" != "" ]]; then
-      LBUFFER="$LBUFFER $(__fsel)"
+      LBUFFER="$LBUFFER$(__fsel)"
   else
       LBUFFER="vim $(__fsel)"
   fi
@@ -56,7 +56,7 @@ changed-file-widget() {
 
 current-dir-widget() {
   if [[ "$LBUFFER" != "" ]]; then
-      LBUFFER="$LBUFFER $(__cur_dir_sel)"
+      LBUFFER="$LBUFFER$(__cur_dir_sel)"
   else
       LBUFFER="vim $(__cur_dir_sel)"
   fi
